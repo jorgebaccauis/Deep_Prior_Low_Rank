@@ -2,9 +2,13 @@
 
 
 
-![Pavia Subset](output.jpg)
+<p align="center">
+  <img  height="300" src="output.jpg">
+</p>
 
-![Pavia Subset](recons.jpg)
+<p align="center">
+  <img  height="300" src="recons.jpg">
+</p>
 
 ## How to cite
 If this code is useful for your and you use it in an academic work, please consider citing this paper as
