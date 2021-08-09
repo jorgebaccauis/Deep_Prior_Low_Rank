@@ -24,8 +24,8 @@ from scipy.ndimage import interpolation
 from tensorflow.keras import layers
 
 def VisualGraphs(RstActual,RstBest,ZTuckerRepr,ConvCurve,Original,ColorBands):
+
     clear_output(wait=True)
-    
     [m,n,L]=Original.shape
     
     #Choose 3 uniform bands from low-Rank Tucker Representation of Z            
@@ -39,68 +39,64 @@ def VisualGraphs(RstActual,RstBest,ZTuckerRepr,ConvCurve,Original,ColorBands):
     
     ErrBest = np.divide(np.power(np.sum(np.power(RstBest-Original,2),axis=2),0.5),np.power(np.sum(np.power(Original,2),axis=2),0.5))
     
-    fig, axs = plt.subplots(1,4,figsize=(14,14))
+    fig, axs = plt.subplots(2,4,figsize=(20,8))
     fig.subplots_adjust(left=.05, bottom=0.1, right=.9, top=0.9, wspace=0.05)            
     
     RGB = Original[:,:,ColorBands]/np.max(Original)
     RGB = RGBZoom(RGB)
-    axs[0].imshow(RGB)
-    axs[0].set_title('Original')
-    axs[0].axis('off')
+    axs[0,0].imshow(RGB)
+    axs[0,0].set_title('Original')
+    axs[0,0].axis('off')
     
     RGB = RstBest[:,:,ColorBands]/np.max(RstBest)
     RGB = RGBZoom(RGB)
-    axs[1].imshow(RGB)
-    axs[1].set_title('Best Reconstruction')
-    axs[1].axis('off')
+    axs[0,1].imshow(RGB)
+    axs[0,1].set_title('Best Reconstruction')
+    axs[0,1].axis('off')
     
-    im = axs[2].imshow(ErrBest, cmap='hot', vmin=0, vmax=1)
-    divider = make_axes_locatable(axs[2])
+    im = axs[0, 2].imshow(ErrBest, cmap='hot', vmin=0, vmax=1)
+    divider = make_axes_locatable(axs[0,2])
     cax = divider.append_axes("right", size="5%", pad=0.05)
     fig.colorbar(im, cax=cax)
-    axs[2].set_title('Relative Error Map\n Best Reconstruction')
-    axs[2].axis('off')
+    axs[0,2].set_title('Relative Error Map\n Best Reconstruction')
+    axs[0,2].axis('off')
     
-    axs[3].imshow(xo)
-    axs[3].set_title('3Bands from Tucker \n Representation of Z')
-    axs[3].axis('off')
+    axs[0,3].imshow(xo)
+    axs[0,3].set_title('3Bands from Tucker \n Representation of Z')
+    axs[0,3].axis('off')
+       
     
-    fig, axs = plt.subplots(1,4,figsize=(14,14))
-    fig.subplots_adjust(left=.05, bottom=0.1, right=.9, top=0.9, wspace=0.05)            
-    
-    asp = np.diff(axs[0].get_xlim())[0] / np.diff(axs[0].get_ylim())[0]
-    axs[0].set_aspect(asp)
-    axs[0].axis('off')
+    asp = np.diff(axs[1,0].get_xlim())[0] / np.diff(axs[1,0].get_ylim())[0]
+    axs[1,0].set_aspect(asp)
+    axs[1,0].axis('off')
     
     RGB = RstActual[:,:,ColorBands]/np.max(RstBest)
     RGB = RGBZoom(RGB)
-    axs[1].imshow(RGB)
-    axs[1].set_title('Actual Reconstruction')
-    axs[1].axis('off')
+    axs[1,1].imshow(RGB)
+    axs[1,1].set_title('Actual Reconstruction')
+    axs[1,1].axis('off')
     
-    im = axs[2].imshow(ErrActual, cmap='hot', vmin=0, vmax=1)
-    divider = make_axes_locatable(axs[2])
+    im = axs[1, 2].imshow(ErrActual, cmap='hot', vmin=0, vmax=1)
+    divider = make_axes_locatable(axs[1, 2])
     cax = divider.append_axes("right", size="5%", pad=0.05)
     fig.colorbar(im, cax=cax)
-    axs[2].set_title('Relative Error Map\n Actual Reconstruction')
-    axs[2].axis('off')
+    axs[1,2].set_title('Relative Error Map\n Actual Reconstruction')
+    axs[1,2].axis('off')
     
-    axs[3].plot(ConvCurve)
-    axs[3].set_title('Convergence Curve\n (Best/Actual)PSNR: (%.2f,' %np.max(ConvCurve) +'%.2f)'%ConvCurve[-1])
-    asp = np.diff(axs[3].get_xlim())[0] / np.diff(axs[3].get_ylim())[0]
-    axs[3].set_aspect(asp)
-    axs[3].yaxis.tick_right()
+    axs[1,3].plot(ConvCurve)
+    axs[1,3].set_title('Convergence Curve\n (Best/Actual)PSNR: (%.2f,' %np.max(ConvCurve) +'%.2f)'%ConvCurve[-1])
+    asp = np.diff(axs[1, 3].get_xlim())[0] / np.diff(axs[1, 3].get_ylim())[0]
+    axs[1,3].set_aspect(asp)
+    axs[1,3].yaxis.tick_right()
     
-    plt.show()
+    plt.savefig('recons.jpg', bbox_inches='tight')
+    # plt.show()
 
 def addGaussianNoise(y,SNR):
-    
-    sigma = np.sum(np.power(y,2))/(np.product(y.shape)*10**(SNR/10));
-    w = np.random.normal(0, np.sqrt(sigma),size =y.shape);
-    return y+w;
-
-
-    return y+noise_y
+    sigma = np.sum(np.power(y,2))/(np.product(y.shape)*10**(SNR/10))
+    w = np.random.normal(0, np.sqrt(sigma),size =y.shape)
+    return y+w
+    # return y+noise_y
 
 def RGBZoom(X):
     
@@ -325,17 +321,14 @@ def Auto_encoder(pretrained_weights=None, input_size=(256, 256, 1), L=10, H=0, f
 
     return model
 
+from tensorflow.keras import backend as K
 
-
-from keras import backend as K
 class myCallback(tf.keras.callbacks.Callback):
-     
-
     def __init__(self,Xorig=0,Freq=0):
         super(myCallback, self).__init__()
         self.my_PSNR = []
-        self.Xorig = Xorig;
-        self.Best = np.zeros(shape=Xorig.shape);
+        self.Xorig = Xorig
+        self.Best = np.zeros(shape=Xorig.shape)
         self.Freq = Freq
         
 
@@ -343,11 +336,8 @@ class myCallback(tf.keras.callbacks.Callback):
         Freq = self.Freq
         self.model.layers[2].rate=0.0
         
-        
         if np.mod(epoch,Freq)==0:            
-            img = self.Xorig;
-            
-            
+            img = self.Xorig
             [m,n,L] = img.shape
            
             func = K.function([self.model.layers[0].input],[self.model.layers[1].output])
@@ -361,17 +351,14 @@ class myCallback(tf.keras.callbacks.Callback):
             
             psnr = fun_PSNR(img,result)
             self.my_PSNR.append(psnr) 
-            print('Epoch %05d: PSNR %6.3f : Max PSNR %6.3f' % (epoch, psnr,np.max(self.my_PSNR)))
+            print('Epoch %05d: PSNR %6.3f : Max PSNR %6.3f' % (epoch, psnr,np.max(self.my_PSNR)), flush=True)
             
             if psnr >= np.max(self.my_PSNR):                
                 self.Best = result
                 setattr(self.model, 'Best', self.Best)
             
-                                
             setattr(self.model, 'PSNRs', self.my_PSNR)
             
         if np.mod(epoch,Freq*5)==0: 
-
             self.model.layers[2].rate=0.5
-            
             VisualGraphs(result,self.Best,xo,self.my_PSNR,img,[27,17,7])
