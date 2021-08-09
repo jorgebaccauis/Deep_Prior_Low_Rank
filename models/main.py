@@ -39,7 +39,7 @@ def VisualGraphs(RstActual,RstBest,ZTuckerRepr,ConvCurve,Original,ColorBands):
     
     ErrBest = np.divide(np.power(np.sum(np.power(RstBest-Original,2),axis=2),0.5),np.power(np.sum(np.power(Original,2),axis=2),0.5))
     
-    fig, axs = plt.subplots(2,4,figsize=(20,8))
+    fig, axs = plt.subplots(2,4,figsize=(16,8))
     fig.subplots_adjust(left=.05, bottom=0.1, right=.9, top=0.9, wspace=0.05)            
     
     RGB = Original[:,:,ColorBands]/np.max(Original)
