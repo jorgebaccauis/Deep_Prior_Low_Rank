@@ -1,6 +1,10 @@
 # Compressive Spectral Image Reconstruction using Deep prior and Low-Rank Tensor Representation
 
+## Abstract
 
+Compressive spectral imaging (CSI) has emerged as an alternative spectral image acquisition technology, which reduces the number of measurements at the cost of requiring a recovery process. In general, the reconstruction methods are based on handcrafted priors used as regularizers in optimization algorithms or recent deep neural networks employed as an image generator to learn a non-linear mapping from the low-dimensional compressed measurements to the image space. However, these deep learning methods need many spectral images to obtain good performance. In this work, a deep recovery framework for CSI without training data is presented. The proposed method is based on the fact that the structure of some deep neural networks and an appropriated low-dimensional structure are sufficient to impose a structure of the underlying spectral image from CSI. We analyzed the low-dimensional structure via the Tucker representation, modeled in the first net layer. The proposed scheme is obtained by minimizing the <img src="https://render.githubusercontent.com/render/math?math=\ell_2">-norm distance between the compressive measurements and the predicted measurements, and the desired recovered spectral image is formed just before the forward operator. Simulated and experimental results verify the effectiveness of the proposed method for the coded aperture snapshot spectral imaging.
+
+## Visual Results
 
 <p align="center">
   <img  height="300" src="output.jpg">
