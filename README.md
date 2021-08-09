@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <img  height="300" src="recons.jpg">
+  <img  height="400" src="recons.jpg">
 </p>
 
 ## How to cite
