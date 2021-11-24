@@ -1,7 +1,7 @@
 # Compressive Spectral Image Reconstruction using Deep prior and Low-Rank Tensor Representation
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hdspgroup/Deep_Prior_Low_Rank/blob/master/colab_setup.ipynb)
-[![DOI:10.1007/978-3-319-76207-4_15](https://zenodo.org/badge/DOI/10.1007/978-3-319-76207-4_15.svg)](https://doi.org/10.1364/AO.420305)
+[![DOI:10.1007/978-3-319-76207-4_15](https://zenodo.org/badge/DOI/10.1364/AO.420305.svg)](https://doi.org/10.1364/AO.420305)
 [![arxiv.org](http://img.shields.io/badge/cs.CV-arXiv%3A2004.10934-B31B1B.svg)](https://arxiv.org/abs/2101.07424)
 
 ## Abstract
